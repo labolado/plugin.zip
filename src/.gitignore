@@ -1,5 +1,6 @@
 *xcuserdata*
-
+.vs
+*.user
 # Backup files left behind by Emacs
 *~
 
