@@ -307,7 +307,7 @@ namespace Corona
 		std::string fileName = archive->GetStr();
 		std::string archivePath	= LuaReader::GetPathForFileBaseDir(L,srcPath->GetData(),fileName.c_str());
 		
-		LVector fileList;
+		LVector fileList, rawFileList;
 		LMap *fileNames	= static_cast<LMap*>(paramsMap.GetData("srcFiles"));
 		
 		if (fileNames != NULL)
@@ -316,12 +316,13 @@ namespace Corona
 			for (int i = 0; i < keys.size(); i++)
 			{
 				LDataString *curFile = static_cast<LDataString*>(fileNames->GetData(keys[i]));
-				
+
 				const char *path =  LuaReader::GetPathForFileBaseDir(L,srcFilesPath->GetData(),curFile->GetStr().c_str());
 				if (path != NULL)
 				{
 					std::string fullPath = path;
 					fileList.Push(fullPath);
+					rawFileList.Push(curFile->GetStr().c_str());
 				}
 				else
 				{
@@ -349,7 +350,7 @@ namespace Corona
 		
 		ZipTaskAddFileToZip *zipTask = new ZipTaskAddFileToZip( archivePath,
 															   password,
-															   fileList,
+															   fileList, rawFileList,
 															   coronaListener);
 		
 		AsyncTaskWithProxy *taskWithProxy = new AsyncTaskWithProxy(zipTask,this);

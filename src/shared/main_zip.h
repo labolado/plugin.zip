@@ -784,10 +784,9 @@ int ExtractAllFromZip(const char *zipFileName, int extractToDir, const char *dir
 	return ExtractFileFromZip(zipFileName,NULL,extractToDir,dirToExtractTo);
 }
 
-int AddToZip(const char *zipFileName, const char *fileToAdd, int includeFilePath, const char *password);
-int AddToZip(const char *zipFileName, const char *fileToAdd, int includeFilePath, const char *password)
+int AddToZip(const char *zipFileName, const char *fileToAdd, const char * rawFile, int includeFilePath, const char *password);
+int AddToZip(const char *zipFileName, const char *fileToAdd, const char * rawFile, int includeFilePath, const char *password)
 {
-	
     int overwriteZipFile=0;
     int opt_compress_level=Z_DEFAULT_COMPRESSION;
     char zipNameComplete[MAXFILENAME+16];
@@ -887,8 +886,13 @@ int AddToZip(const char *zipFileName, const char *fileToAdd, int includeFilePath
 	}
 	
 	/*should the zip file contain any path at all?*/
-	
-	if( includeFilePath == 0 )
+
+    if (rawFile)
+    {
+        savefilenameinzip = rawFile;
+    }
+
+	else if( includeFilePath == 0 )
 	{
 		const char *tmpptr;
 		const char *lastslash = 0;

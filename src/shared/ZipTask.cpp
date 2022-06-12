@@ -429,11 +429,12 @@ namespace Corona
 //Add File
 ZipTaskAddFileToZip::ZipTaskAddFileToZip(	std::string pathSource,
 											std::string *password,
-											LVector fileList,
+											LVector fileList, LVector rawFileList,
 											CoronaLuaRef ref):
 	fPathSource(pathSource),
 	fPassword(password),
-	fFileList(fileList)
+	fFileList(fileList),
+	fRawFileList(rawFileList)
 	{
 		fRef = ref;
 	}
@@ -457,7 +458,8 @@ ZipTaskAddFileToZip::ZipTaskAddFileToZip(	std::string pathSource,
 		{
 			
 			std::string fileToAddName = fFileList.GetVal(i);
-			if (ZIP_OK != AddToZip(pathSource.c_str(), fileToAddName.c_str(), 0, password))
+			std::string rawFile = fRawFileList.GetVal(i);
+			if (ZIP_OK != AddToZip(pathSource.c_str(), fileToAddName.c_str(), rawFile.c_str(), 0, password))
 			{
 				fIsError = true;
 			}

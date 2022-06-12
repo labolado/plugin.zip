@@ -105,6 +105,7 @@ namespace Corona
 		ZipTaskAddFileToZip(std::string pathSource,
 							std::string *password,
 							LVector fileList,
+							LVector rawFileList,
 							CoronaLuaRef ref);
 		virtual ~ZipTaskAddFileToZip();
 		
@@ -116,7 +117,7 @@ namespace Corona
 	private:
 		std::string fPathSource;
 		std::string *fPassword;
-		LVector fFileList;
+		LVector fFileList, fRawFileList;
 		
 		//Output
 		std::vector<output_info> fOutputInfo;
