@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -47,7 +47,7 @@
 		4C2A47E81BDEE0DD00827C6A /* ZipTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2A47B21BDEE0DD00827C6A /* ZipTask.h */; };
 		4C2A47EA1BDEE14A00827C6A /* main_zip.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2A47E91BDEE14A00827C6A /* main_zip.h */; };
 		4C2A47EC1BDEE22200827C6A /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2A47EB1BDEE22200827C6A /* libz.1.dylib */; };
-		A49EC1AB1BD77C530093F529 /* CoronaCards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A49EC1AA1BD77C530093F529 /* CoronaCards.framework */; };
+		A49EC1AB1BD77C530093F529 /* CoronaCards.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A49EC1AA1BD77C530093F529 /* CoronaCards.xcframework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -56,6 +56,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.lua";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			outputFiles = (
 				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).c",
@@ -103,7 +105,7 @@
 		4C2A47ED1BDEE26500827C6A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		A49EC1861BD779560093F529 /* Corona_plugin_zip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Corona_plugin_zip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A49EC18B1BD779560093F529 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Plugin/Info.plist; sourceTree = "<group>"; };
-		A49EC1AA1BD77C530093F529 /* CoronaCards.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoronaCards.framework; path = CoronaEnterprise/Corona/tvos/frameworks/CoronaCards.framework; sourceTree = "<group>"; };
+		A49EC1AA1BD77C530093F529 /* CoronaCards.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CoronaCards.xcframework; path = CoronaEnterprise/Corona/tvos/frameworks/CoronaCards.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,7 +114,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C2A47EC1BDEE22200827C6A /* libz.1.dylib in Frameworks */,
-				A49EC1AB1BD77C530093F529 /* CoronaCards.framework in Frameworks */,
+				A49EC1AB1BD77C530093F529 /* CoronaCards.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,7 +193,7 @@
 			children = (
 				4C2A47ED1BDEE26500827C6A /* libz.tbd */,
 				4C2A47EB1BDEE22200827C6A /* libz.1.dylib */,
-				A49EC1AA1BD77C530093F529 /* CoronaCards.framework */,
+				A49EC1AA1BD77C530093F529 /* CoronaCards.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -266,6 +268,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = A49EC17C1BD779560093F529;
@@ -448,7 +451,11 @@
 				GCC_ENABLE_CPP_RTTI = NO;
 				INFOPLIST_FILE = Plugin/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.coronalabs.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -471,7 +478,11 @@
 				GCC_ENABLE_CPP_RTTI = NO;
 				INFOPLIST_FILE = Plugin/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.coronalabs.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
