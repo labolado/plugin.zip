@@ -9,6 +9,21 @@
 #include "ZipTask.h"
 #include "main_zip.h"
 
+// Adapted from lfs.c:
+#include <sys/stat.h>
+
+#ifdef _WIN32
+	#define STAT_STRUCT struct _stati64
+	#define STAT_FUNC lua_wstati64		/* <- Modified by Corona Labs to support unicode paths. */
+
+	#ifndef S_ISDIR
+		#define S_ISDIR(mode)  (mode&_S_IFDIR)
+	#endif
+#else
+#define STAT_STRUCT struct stat
+#define STAT_FUNC stat
+#endif
+
 namespace Corona
 {
 	ZipTaskExtract::ZipTaskExtract(	std::string pathSource,
@@ -133,17 +148,20 @@ namespace Corona
 						err = unzGetCurrentFileInfo64(uf,&file_info,filename_inzip,sizeof(filename_inzip),NULL,0,NULL,0);
 						
 						//Cache result
-						if (do_extract_currentfile(uf,&opt_extract_without_path,
-												   &opt_overwrite,
-												   password) == UNZ_OK)
+						if (file_info.uncompressed_size > 0)
 						{
-							LDataString *str = new LDataString(filename_inzip);
-							fOutputList.SetData(filename_inzip, str);
-						}
-						else
-						{
-							fIsError = true;
-							break;
+							if (do_extract_currentfile(uf,&opt_extract_without_path,
+													   &opt_overwrite,
+													   password) == UNZ_OK)
+							{
+								LDataString *str = new LDataString(filename_inzip);
+								fOutputList.SetData(filename_inzip, str);
+							}
+							else
+							{
+								fIsError = true;
+								break;
+							}
 						}
 						if ((i+1)<gi.number_entry)
 						{
@@ -381,6 +399,7 @@ namespace Corona
 				}
 			}
 		}
+		unzClose(uf);
 	}
 
 	void ZipTaskListAllFilesInZip::DoDispatch(lua_State *L)
@@ -456,8 +475,17 @@ ZipTaskAddFileToZip::ZipTaskAddFileToZip(	std::string pathSource,
 		
 		for (int i = 0; i < vals && fIsError == false; i++)
 		{
-			
+
 			std::string fileToAddName = fFileList.GetVal(i);
+
+			// Adapted from lfs.c:
+			STAT_STRUCT info;
+
+			if (0 == STAT_FUNC(fileToAddName.c_str(), &info) && 0 != S_ISDIR(info.st_mode))
+			{
+				continue;
+			}
+
 			std::string rawFile = fRawFileList.GetVal(i);
 			if (ZIP_OK != AddToZip(pathSource.c_str(), fileToAddName.c_str(), rawFile.c_str(), 0, password))
 			{
