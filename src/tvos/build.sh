@@ -38,6 +38,3 @@ echo "OUTPUT_DIR: $OUTPUT_DIR"
 xcodebuild -project "$path/Plugin.xcodeproj" -alltargets -configuration "$CONFIG"
 checkError
 
-# Copy universal binary.
-cp -r "$path"/build/Release-universal/*.framework "$OUTPUT_DIR"
-
