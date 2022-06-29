@@ -312,6 +312,12 @@ namespace Corona
 		
 		if (fileNames != NULL)
 		{
+			LDataBool *includeFilePath = static_cast<LDataBool*>(paramsMap.GetData("includeFilePath"));
+			bool bIncludeFilePath = false;
+			if (includeFilePath != NULL)
+			{
+				bIncludeFilePath = includeFilePath->GetBool();
+			}
 			std::vector<std::string> keys = fileNames->GetKeys();
 			for (int i = 0; i < keys.size(); i++)
 			{
@@ -322,7 +328,10 @@ namespace Corona
 				{
 					std::string fullPath = path;
 					fileList.Push(fullPath);
-					rawFileList.Push(curFile->GetStr().c_str());
+					if (bIncludeFilePath)
+					{
+						rawFileList.Push(curFile->GetStr().c_str());
+					}
 				}
 				else
 				{

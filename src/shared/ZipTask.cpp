@@ -473,6 +473,7 @@ ZipTaskAddFileToZip::ZipTaskAddFileToZip(	std::string pathSource,
 		}
 		int vals = fFileList.GetCount();
 		
+		bool bIncludeFilePath = fRawFileList.GetCount() == vals;
 		for (int i = 0; i < vals && fIsError == false; i++)
 		{
 
@@ -486,8 +487,7 @@ ZipTaskAddFileToZip::ZipTaskAddFileToZip(	std::string pathSource,
 				continue;
 			}
 
-			std::string rawFile = fRawFileList.GetVal(i);
-			if (ZIP_OK != AddToZip(pathSource.c_str(), fileToAddName.c_str(), rawFile.c_str(), 0, password))
+			if (ZIP_OK != AddToZip(pathSource.c_str(), fileToAddName.c_str(), bIncludeFilePath ? fRawFileList.GetVal(i).c_str() : NULL, 0, password))
 			{
 				fIsError = true;
 			}
