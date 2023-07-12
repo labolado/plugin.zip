@@ -1,3 +1,5 @@
+.DS_Store
+Thumbs.db
 plugins/*.tgz
 src/mac/plugin_zip.dylib
 src/ios/libplugin.zip.a
