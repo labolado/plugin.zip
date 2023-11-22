@@ -490,6 +490,12 @@ int do_extract_currentfile(    unzFile uf, const int* popt_extract_without_path,
         else
             write_filename = filename_withoutpath;
 
+        // Fix directory traversal issue.
+        // Modified from https://sources.debian.org/src/minizip/1.1-8/miniunz.c/#L369-L370 under the zlib license,
+        //   also delete the leading Windows-style dir sep.
+        while ((*write_filename) == '/' || (*write_filename) == '\\' || (*write_filename) == '.')
+            write_filename++;
+
         err = unzOpenCurrentFilePassword(uf,password);
         if (err!=UNZ_OK)
         {
