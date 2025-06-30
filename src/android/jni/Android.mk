@@ -16,8 +16,6 @@ LOCAL_SRC_FILES := ../corona-libs/jni/$(TARGET_ARCH_ABI)/libcorona.so
 LOCAL_EXPORT_C_INCLUDES := /Applications/CoronaEnterprise/Corona/shared/include/Corona
 include $(PREBUILT_SHARED_LIBRARY)
 
-LOCAL_LDFLAGS += "-Wl,-z,max-page-size=16384"
-LOCAL_LDFLAGS += "-Wl,-z,common-page-size=16384"
 # -----------------------------------------------------------------------------
 
 
@@ -66,6 +64,8 @@ LOCAL_CFLAGS     := \
 LOCAL_SHARED_LIBRARIES := corona lua
 LOCAL_LDLIBS := -llog -lz
 
+LOCAL_LDFLAGS += "-Wl,-z,max-page-size=16384"
+LOCAL_LDFLAGS += "-Wl,-z,common-page-size=16384"
 
 ifeq ($(TARGET_ARCH),arm)
 # LOCAL_CFLAGS+= -D_ARM_ASSEM_
