@@ -16,6 +16,8 @@ LOCAL_SRC_FILES := ../corona-libs/jni/$(TARGET_ARCH_ABI)/libcorona.so
 LOCAL_EXPORT_C_INCLUDES := /Applications/CoronaEnterprise/Corona/shared/include/Corona
 include $(PREBUILT_SHARED_LIBRARY)
 
+LOCAL_LDFLAGS += "-Wl,-z,max-page-size=16384"
+LOCAL_LDFLAGS += "-Wl,-z,common-page-size=16384"
 # -----------------------------------------------------------------------------
 
 
